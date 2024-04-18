@@ -1,0 +1,55 @@
+<html>
+<head>
+  <title>Date of Birth</title>
+  <style>
+    body {
+      background-image: url('cartoon.gif');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial;
+      text-align: center;
+      margin: 50px;
+    }
+  </style>
+</head>
+<body>
+  <label for="idNumberInput">ID Number:</label>
+  <input type="text" id="idNumberInput" maxlength="13" placeholder="Enter your 13-digit ID number">
+ 
+  <button onclick="calculateDOB()">Check Date of Birth</button>
+ 
+  <p id="dobDisplay"></p>
+  <br>
+
+  <script>
+    function calculateDOB() {
+      var idNumber = document.getElementById("idNumberInput").value;
+
+      // Validate the length of the ID number
+      if (idNumber.length !== 13) {
+        document.getElementById("dobDisplay").innerText = "Invalid ID number";
+        return;
+      }
+
+      // Extract birthdate information from the ID number
+      var year = idNumber.substring(0, 2);
+      var month = idNumber.substring(2, 4);
+      var day = idNumber.substring(4, 6);
+
+      // Convert to a four-digit year
+      var currentYear = new Date().getFullYear();
+      year = (parseInt(year) < currentYear - 2000) ? "20" + year : "19" + year;
+
+      // Create a Date object with the extracted information
+      var dob = new Date(year, parseInt(month) - 1, day);
+
+      // Format the date in dd/mm/yyyy format
+      var formattedDOB = dob.getDate().toString().padStart(2, '0') + '/' +
+                         (dob.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                         dob.getFullYear();
+
+      document.getElementById("dobDisplay").innerText = "Date of Birth: " + formattedDOB;
+    }
+  </script>
+</body>
+</html>
